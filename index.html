@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#111113">
+    <title>Linear — Project Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="workspace">
+                <div class="brand">A</div>
+                <div><b>Acme Inc.</b><small>Workspace</small></div><button class="ghost" id="workspaceMenu">⌄</button>
+            </div>
+            <nav>
+                <div class="nav-group"><button class="nav" data-view="inbox">◉
+                        <span>Inbox</span><small>3</small></button><button class="nav" data-view="my-issues">◎ <span>My
+                            issues</span></button><button class="nav" data-view="views">▤ <span>Views</span></button>
+                </div>
+                <div class="nav-label">WORKSPACE <button class="mini" id="addItem">＋</button></div><button
+                    class="nav active" data-view="issues">☷ <span>Issues</span></button><button class="nav"
+                    data-view="projects">▦ <span>Projects</span></button><button class="nav" data-view="cycles">◷
+                    <span>Cycles</span></button><button class="nav" data-view="initiatives">◇
+                    <span>Initiatives</span></button>
+                <div class="nav-label">FAVORITES <button class="mini" id="favorite">＋</button></div><button class="nav"
+                    data-view="project" data-project="Website redesign"><i class="dot purple"></i><span>Website
+                        redesign</span></button><button class="nav" data-view="project" data-project="Mobile app"><i
+                        class="dot blue"></i><span>Mobile app</span></button>
+                <div class="nav-label">TEAMS <button class="mini" id="addTeam">＋</button></div><button class="nav"><i
+                        class="team-icon">EN</i><span>Engineering</span><small>⌄</small></button><button class="nav"><i
+                        class="team-icon pink">DE</i><span>Design</span><small>⌄</small></button><button class="nav"><i
+                        class="team-icon green">PR</i><span>Product</span><small>⌄</small></button>
+            </nav>
+            <div class="profile">
+                <div class="avatar">AG</div>
+                <div><b>Atharva Gurav</b><small>Free plan</small></div><button class="ghost" id="themeToggle">◐</button>
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div class="crumb"><button class="ghost mobile"
+                        id="mobileMenu">☰</button><span>Engineering</span><i>/</i><b id="crumb">Issues</b></div>
+                <div class="top-actions"><button class="search" id="searchOpen">⌕ <span>Search</span><kbd>⌘
+                            K</kbd></button><button class="ghost" id="help">?</button>
+                    <div class="avatar small">AG</div>
+                </div>
+            </header>
+            <section class="content">
+                <div class="heading">
+                    <div>
+                        <div class="eyebrow">ENGINEERING <span>·</span> ALL ISSUES</div>
+                        <h1 id="title">Issues</h1>
+                        <p id="subtitle">Plan, track, and ship your team's work.</p>
+                    </div>
+                    <div class="heading-buttons"><button class="button quiet" id="display">☷ Display</button><button
+                            class="button primary" id="create">＋ Create issue</button></div>
+                </div>
+                <div class="toolbar">
+                    <div class="tools">
+                        <div class="segmented"><button class="selected" data-mode="list">☷ List</button><button
+                                data-mode="board">▦ Board</button></div><button class="tool" id="filter">☷ Filter <em
+                                id="filterMark"></em></button><button class="tool" id="sort">↕ Sort</button>
+                    </div>
+                    <div class="tools"><button class="ghost" id="expand">▥</button><button class="ghost"
+                            id="refresh">↻</button><button class="ghost" id="more">•••</button></div>
+                </div>
+                <div id="view"></div>
+                <div id="empty" class="empty hidden">
+                    <div>✳</div>
+                    <h3>No issues found</h3>
+                    <p>Try changing your filters or create a new issue.</p><button class="button primary"
+                        id="emptyCreate">Create issue</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="overlay hidden" id="overlay"></div>
+    <section class="modal hidden" id="createModal">
+        <header><span>▣ Engineering <i>⌄</i></span><button class="ghost" data-close>✕</button></header><input
+            id="newTitle" class="big-input" placeholder="Issue title" maxlength="120"><textarea id="newDesc"
+            placeholder="Add a description…"></textarea>
+        <div class="fields"><label>Status<select id="newStatus">
+                    <option>Todo</option>
+                    <option>In Progress</option>
+                    <option>In Review</option>
+                    <option>Done</option>
+                    <option>Backlog</option>
+                </select></label><label>Priority<select id="newPriority">
+                    <option>Medium</option>
+                    <option>Urgent</option>
+                    <option>High</option>
+                    <option>Low</option>
+                    <option>No priority</option>
+                </select></label><label>Assignee<select id="newAssignee">
+                    <option>Atharva Gurav</option>
+                    <option>Olivia Chen</option>
+                    <option>Marcus Lee</option>
+                    <option>Sophia Patel</option>
+                    <option>Unassigned</option>
+                </select></label><label>Project<select id="newProject">
+                    <option>Website redesign</option>
+                    <option>Mobile app</option>
+                    <option>Platform reliability</option>
+                    <option>Growth experiments</option>
+                </select></label></div>
+        <footer><span>⌘ + Enter to create</span><button class="button primary" id="submit">Create issue ↗</button>
+        </footer>
+    </section>
+    <aside class="detail hidden" id="detail">
+        <header>
+            <div><b id="detailId">ENG-101</b> · Issue</div>
+            <div><button class="ghost" id="deleteIssue">•••</button><button class="ghost" id="closeDetail">✕</button>
+            </div>
+        </header>
+        <div class="detail-body"><input id="editTitle" class="detail-title"><textarea id="editDesc"
+                placeholder="Add a description…"></textarea>
+            <div class="properties"><label>Status<select id="editStatus">
+                        <option>Backlog</option>
+                        <option>Todo</option>
+                        <option>In Progress</option>
+                        <option>In Review</option>
+                        <option>Done</option>
+                    </select></label><label>Priority<select id="editPriority">
+                        <option>No priority</option>
+                        <option>Urgent</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select></label><label>Assignee<select id="editAssignee">
+                        <option>Atharva Gurav</option>
+                        <option>Olivia Chen</option>
+                        <option>Marcus Lee</option>
+                        <option>Sophia Patel</option>
+                        <option>Unassigned</option>
+                    </select></label><label>Project<select id="editProject">
+                        <option>Website redesign</option>
+                        <option>Mobile app</option>
+                        <option>Platform reliability</option>
+                        <option>Growth experiments</option>
+                    </select></label></div>
+            <h3>Activity <button class="mini">＋</button></h3>
+            <div class="activity">
+                <div class="avatar">AG</div>
+                <div><b>Atharva Gurav</b><span> created this issue · just now</span>
+                    <p>Let's get this moving.</p>
+                </div>
+            </div>
+            <div class="comment"><input id="commentText" placeholder="Leave a comment…"><button
+                    id="sendComment">↑</button></div>
+            <div id="comments"></div>
+        </div>
+        <footer><span id="saveLabel">All changes saved</span><button class="button primary" id="save">Save
+                changes</button></footer>
+    </aside>
+    <section class="palette hidden" id="palette">
+        <div class="palette-search">⌕ <input id="commandInput"
+                placeholder="Search for anything or type a command…"><kbd>ESC</kbd></div>
+        <div id="commandResults"></div>
+        <footer>↑↓ Navigate <span>↵ Select</span><span>ESC Close</span></footer>
+    </section>
+    <div class="toasts" id="toasts"></div>
+    <script src="app.js"></script>
+</body>
+
+</html>
